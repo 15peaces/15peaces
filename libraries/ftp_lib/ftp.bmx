@@ -4,6 +4,7 @@ Rem
 	Method connect(ip,port = 21,local_port = -1)
 		-Connects to Server
 		-Sample: myftp.connect("ftpserver.com")
+		TEST FOR SVN!
 endrem
 
 Type Tftp
@@ -12,7 +13,7 @@ Type Tftp
 	
 	Method Init(silent:Int = 1)
 		_silent = silent
-	endmethod
+	EndMethod
 	
 	Method connect(ip:String,port:Int = 21,local_port:Int = -1)
 	
@@ -33,13 +34,13 @@ Type Tftp
 		
 		Local con:TStream = ReadStream(_connection)
 		
-		repeat
+		Repeat
 			Local t:String = ReadLine(con)
 				Select t[..3]
 					Case 220
-						If Not _silent then Print t
-				endselect
+						If Not _silent Then Print t
+				EndSelect
 		Until Eof(con) Or TimerTicks(mtimer) > 1000 'FIX: TIMER!
-	endmethod
+	EndMethod
 
 EndType

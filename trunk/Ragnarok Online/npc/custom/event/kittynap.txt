@@ -1,0 +1,113 @@
+// ============== Information ==========================================
+// = Kitty'nap AutoEvent (NyanRO)
+// = Made by :
+// = 15peaces
+//===== Current Version: =============================================== 
+//= 1.01 [15peaces]
+//===== Compatible With: =============================================== 
+//= Athena / 3ceam
+//===== Description: =================================================== 
+//= Find and rescue the nyanRO mascot. (Nyan)
+//===== Changes: ======================================================= 
+//= 1.0: First Version [15peaces]
+//= 1.01: Changed atcommand (doommap) to mapwarp to solve some problems
+//= 		after Event ended. [15peaces]
+//======================================================================
+
+rachel,112,113,3	script	Nero the Kidnapper	810,{
+	percentheal 100, 100;
+	warp "poring_w02", 116, 82;
+	end;
+}
+
+-	script	kittynap	-1,{
+	OnInit:
+		disablenpc "Nero the Kidnapper";
+		end;
+		
+	OnClock1630:
+	OnClock2030:
+		announce "Kidnapper: I have kidnapped your mascot, the Nyan Cat!",0;
+		sleep 4000;
+		announce "Kidnapper: You want the Cat back?!",0;
+		sleep 4000;
+		announce "Kidnapper: Than hurry and come to RACHEL! I'll only wait for a Minute!",0;
+		enablenpc "Nero the Kidnapper";
+		sleep 30000;
+		announce "Kidnapper: 30",0;
+		sleep 20000;
+		announce "Kidnapper: 10",0;
+		sleep 5000;
+		announce "Kidnapper: 5",0;
+		sleep 2000;
+		announce "Kidnapper: 3",0;
+		sleep 1000;
+		announce "Kidnapper: 2",0;
+		sleep 1000;
+		announce "Kidnapper: 1",0;
+		sleep 1000;
+		disablenpc "Nero the Kidnapper";
+		if(getmapusers("poring_w02") < 1){
+			announce "Kidnapper: To bad... Seems like Nyan will stay with me...", 0;
+			end;
+		}
+		
+		goto L_START;
+		end;
+	
+	L_Start:
+		mapannounce "poring_w02","Kidnapper: The rules are simple.",0;
+		sleep 1000;
+		mapannounce "poring_w02","Kidnapper: You have to find and kill a monster.",0;
+		sleep 1000;
+		mapannounce "poring_w02","Kidnapper: This monster is only aviable once.",0;
+		sleep 1000;
+		mapannounce "poring_w02","Kidnapper: Be warned: If you kill the wrong one, you'll be warped back!",0;
+		sleep 1000;
+		mapannounce "poring_w02","Kidnapper: Good Luck!",0;
+		sleep 1000;
+		areamonster "poring_w02",112,88,122,78,"I'm Nyan",1728,1,"kitwin::OnMobKilled"; //winner
+		areamonster "poring_w02",112,88,122,78,"Fakemonster",1728,200,"kitlose::OnMobKilled"; //looser
+		end;
+}
+
+-	script	kitwin	-1,{
+
+OnMobKilled:
+	dispbottom "Kidnapper : Congratulations. You've rescued Nyan...";
+	//atcommand ".doommap";
+	mapwarp "poring_w02","rachel",110,110;
+	killmonster "poring_w02","All";
+	announce "Nyan : Since he/she rescued me, " + rid2name(getcharid(3)) + " will get 2 EventPoints.",0;
+	query_sql "SELECT `coins` FROM `eventpoints` WHERE `ID` = " + getcharid(3), @ePoints2;
+	set @ePoints2, @ePoints2 + 2;
+	query_sql "DELETE FROM `eventpoints` WHERE `ID` =  " + getcharid(3);
+	query_sql("SELECT `userid` from `login` WHERE account_id="+getcharid(3)+"", @UserID$); 
+	query_sql "INSERT INTO `eventpoints` (`ID`,`account_name`,`coins`) VALUES ('"+getcharid(3)+"','"+@UserID$+"','"+@ePoints2+"')";
+	warp "rachel",110,110;
+	end;
+}
+
+-	script	kitlose	-1,{
+
+OnMobKilled:
+	dispbottom "Kidnapper : Wahaha, you loser! - You killed the wrong one.";
+	warp "rachel",110,110;
+		if(getmapusers("poring_w02") < 1){
+			announce "Kidnapper: To bad... Seems like Nyan will stay with me...", 0;
+			killmonsterall "poring_w02";
+			end;
+		}
+	end;
+}
+
+// -- Mapflags
+poring_w02	mapflag	nowarp
+poring_w02	mapflag	nowarpto
+poring_w02	mapflag	noteleport
+poring_w02	mapflag	nosave
+poring_w02	mapflag	nomemo
+poring_w02	mapflag	nobranch
+poring_w02	mapflag	noloot
+poring_w02	mapflag	noskill
+poring_w02	mapflag	nopenalty

@@ -1,0 +1,142 @@
+//15peaces eA Script
+//Poring Bomb (Run Or Die)
+//V.1.00 -> Downloaded from eathena.ws
+
+//Version: 1.01a by 15peaces (fixed by atomius)
+
+//Changes:
+//1.00a : Added EventPoints as a Reward (nyanRO)
+//1.01 : Added 8000 Monster-Limit to fix Client-Crashbug
+//		 Fixed some horrible Bugs in EventPoints system (nyanRO)
+//1.01a : Fixed: event did not end if all except the last player logged out
+//        (last player didn't get EventPoints)
+
+prontera,148,172,5	script	Run Or Die	100,{
+	if ( getarraysize($@pb_aidlist) >= 100 ) {
+		mes "I'm sorry, the room is full";
+		close;
+	}
+	percentheal 100, 100;
+	warp "guild_vs5", 0, 0;
+	set $@pb_aidlist[ getarraysize($@pb_aidlist) ], getcharid(3);
+	end;
+}
+-	script	runordie	-1,{
+OnInit:
+	disablenpc "Run Or Die";
+	end;
+
+OnWhisperGlobal:
+	if ( getgmlevel() < 99 ) end;
+OnClock0145: // these are time to start event
+OnClock1045:
+OnClock1645:
+OnClock2145:
+	killmonsterall "guild_vs5"; 
+	announce "Run Or Die!!!: Are you ready to join Run Or Die event???", 0;
+	enablenpc "Run Or Die";
+	mapwarp "guild_vs5", "prontera", 148,172;
+	sleep 4000;
+	announce "Run Or Die: For Those who dare to join please Prontera to participate", 0;
+	sleep 6000;
+	announce "Run Or Die: Register time will be closing after 1 minute", 0;
+	sleep 20000;
+	announce "Run Or Die: Last 30 second", 0;
+	sleep 10000;
+	announce "Run Or Die: Rush type in '.go prontera' to join", 0;
+	sleep 10000;
+	announce "Run Or Die: Last 10 second to register", 0;
+	sleep 5000;
+	announce "Run Or Die: 5", 0;
+	sleep 1000;
+	announce "Run Or Die: 4", 0;
+	sleep 1000;
+	announce "Run Or Die: 3", 0;
+	sleep 1000;
+	announce "Run Or Die: 2", 0;
+	sleep 1000;
+	announce "Run Or Die: 1", 0;
+	sleep 1000;
+	announce "Run Or Die: Time is up...I will come again later..", 0;
+	disablenpc "Run Or Die";
+	mapannounce "guild_vs5", "Welcome to Run Or Die event", 0;
+	sleep 3000;
+	mapannounce "guild_vs5", "This is an easy event", 0;
+	sleep 3000;
+	mapannounce "guild_vs5", "Just stay AWAY from anything that you think its DANGEROUS!!", 0;
+	sleep 3000;
+	mapannounce "guild_vs5", "Stay alive as long as YOU CAN!!!!", 0;
+	sleep 3000;
+	mapannounce "guild_vs5", "The LAST SURVIVOR will be the WINNER", 0;
+	sleep 3000;
+	mapannounce "guild_vs5", "event will start in 3", 0;
+	sleep 1000;
+	mapannounce "guild_vs5", "2...", 0;
+	sleep 1000;
+	mapannounce "guild_vs5", "1...", 0;
+	sleep 1000;
+	mapannounce "guild_vs5", "Its time to run !!", 0;
+	initnpctimer;
+	set .stop, 0;
+	while (1) {
+		if (getmapmobs("guild_vs5") < 7000){
+			monster "guild_vs5", 0,0, "Come On Baby!!!", 1904, 5 + .@extra;
+		}
+		if(getmapusers("guild_vs5") < 1){
+			announce "Winner logged out, too bad.", 0;
+			killmonsterall "guild_vs5";
+			end;
+		}
+		sleep 5000;
+		if ( .stop ) end;
+		set .@extra, .@extra + rand(1,5);
+		set .@round, .@round +1;
+	}
+	end;
+
+OnTimer500:
+	stopnpctimer;
+	while ( getarraysize($@pb_aidlist) > 1 ) {
+		sleep 500;
+		for ( set .@i, 0; .@i < getarraysize($@pb_aidlist); set .@i, .@i +1 ) {
+			if ( isloggedin($@pb_aidlist[.@i]) == 0 ) {
+				deletearray $@pb_aidlist[.@i], 1;
+				set .@i, .@i -1;
+			}
+			else {
+				attachrid $@pb_aidlist[.@i];
+				if ( strcharinfo(3) != "guild_vs5" || hp == 0 ) {
+					deletearray $@pb_aidlist[.@i], 1;
+					set .@i, .@i -1;
+				}
+			}
+		}
+	}
+	detachrid;
+	set .stop, 1;
+	killmonsterall "guild_vs5";
+	if ( getarraysize($@pb_aidlist) == 1 ) {
+		announce "congratulations ~ the winner is "+ rid2name($@pb_aidlist), 0;
+		sleep 5000;
+		announce rid2name($@pb_aidlist) +" got 2 EventPoints for winning!", 0;
+		attachrid $@pb_aidlist;
+		query_sql "SELECT `coins` FROM `eventpoints` WHERE `ID` = " + getcharid(3), @ePoints2;
+		set @ePoints2, @ePoints2 + 2;
+		query_sql "DELETE FROM `eventpoints` WHERE `ID` =  " + getcharid(3);
+		query_sql("SELECT `userid` from `login` WHERE account_id="+getcharid(3)+"", @UserID$); 
+		query_sql "INSERT INTO `eventpoints` (`ID`,`account_name`,`coins`) VALUES ('"+getcharid(3)+"','"+@UserID$+"','"+@ePoints2+"')";
+
+		warp "prontera", 148,172;
+		deletearray $@pb_aidlist;
+	}
+	else {
+		announce "nobody is a winner, too bad", 0;
+	}
+	end;
+}
+guild_vs5	mapflag	nowarp
+guild_vs5	mapflag	nowarpto
+guild_vs5	mapflag	noteleport
+guild_vs5	mapflag	nosave	SavePoint
+guild_vs5	mapflag	noskill
+guild_vs5	mapflag	nomemo

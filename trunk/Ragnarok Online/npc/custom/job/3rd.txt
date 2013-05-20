@@ -1,0 +1,376 @@
+//===== eAthena Script =======================================
+//= 15peaces Jobchanger for 3rd- Jobs
+//===== By: ==================================================
+//= 15peaces
+//===== Current Version: =====================================
+//= 1.01
+//===== Compatible With: =====================================
+//= all eAthena Versions with 3rd- Job- classes
+//===== Description: =========================================
+//= Changes to 3rd Job
+//===== Changes: =============================================
+// 1.01	added check for statpoints
+//============================================================
+
+brasilis,170,190,3	script	Master of 3rd Jobs	123,{
+	mes "^ff0000[Master of 3rd Jobs]^000000";
+	if(SkillPoint != 0){
+		mes "I'm sorry, please use up all your skill points before changing jobs";
+		mes "Please come again soon!";
+		close;
+	}
+	if (Class >= 4054 && Class <= 4059 && BaseLevel >= 99 && JobLevel >= 50){
+		mes "Do you want to be reborn?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4001;
+				resetlvl(1);
+				skill 142,1,0;
+				skill 143,1,0;
+				close;	
+			case 2:
+				mes "Ok. Please come back if you are ready to reborn.";
+				close;
+		}
+	}
+	if (Class >= 4066 && Class <= 4072 && BaseLevel >= 99 && JobLevel >= 50){
+		mes "Do you want to be reborn?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4001;
+				resetlvl(1);
+				skill 142,1,0;
+				skill 143,1,0;
+				close;	
+			case 2:
+				mes "Ok. Please come back if you are ready to reborn.";
+				close;
+		}
+	}
+	if (Class == 12 && JobLevel == 50){
+		mes "Do you want to change to ^ff0000Guillotine Cross^000000?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4059;
+				close;
+			case 2:
+				mes "Ok. Please come back if you are ready to change.";
+				close;
+
+		}
+	}
+	if (Class == 7 && JobLevel == 50){
+		mes "Do you want to change to ^ff0000Rune Knight^000000?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4054;
+				close;
+			case 2:
+				mes "Ok. Please come back if you are ready to change.";
+				close;
+		}
+	}
+	if (Class == 9 && JobLevel == 50){
+		mes "Do you want to change to ^ff0000Warlock^000000?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4055;
+				close;
+			case 2:
+				mes "Ok. Please come back if you are ready to change.";
+				close;
+		}
+	}
+	if (Class == 11 && JobLevel == 50){
+		mes "Do you want to change to ^ff0000Ranger^000000?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4056;
+				close;
+			case 2:
+				mes "Ok. Please come back if you are ready to change.";
+				close;
+		}
+	}
+	if (Class == 8 && JobLevel == 50){
+		mes "Do you want to change to ^ff0000Arch Bishop^000000?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4057;
+				close;
+			case 2:
+				mes "Ok. Please come back if you are ready to change.";
+				close;
+		}
+	}
+	if (Class == 10 && JobLevel == 50){
+		mes "Do you want to change to ^ff0000Mechanic^000000?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4058;
+				close;
+			case 2:
+				mes "Ok. Please come back if you are ready to change.";
+				close;
+		}
+	}
+
+	if (Class == 17 && JobLevel == 50){
+		mes "Do you want to change to ^ff0000Shadow Chaser^000000?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4072;
+				close;
+			case 2:
+				mes "Ok. Please come back if you are ready to change.";
+				close;
+
+		}
+	}
+	if (Class == 14 && JobLevel == 50){
+		mes "Do you want to change to ^ff0000Royal Guard^000000?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4066;
+				close;
+			case 2:
+				mes "Ok. Please come back if you are ready to change.";
+				close;
+		}
+	}
+	if (Class == 16 && JobLevel == 50){
+		mes "Do you want to change to ^ff0000Sorcerer^000000?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4067;
+				close;
+			case 2:
+				mes "Ok. Please come back if you are ready to change.";
+				close;
+		}
+	}
+	if (Class == 19 && JobLevel == 50){
+		mes "Do you want to change to ^ff0000Minstrel^000000?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4068;
+				close;
+			case 2:
+				mes "Ok. Please come back if you are ready to change.";
+				close;
+		}
+	}
+	if (Class == 20 && JobLevel == 50){
+		mes "Do you want to change to ^ff0000Wanderer^000000?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4069;
+				close;
+			case 2:
+				mes "Ok. Please come back if you are ready to change.";
+				close;
+		}
+	}
+	if (Class == 15 && JobLevel == 50){
+		mes "Do you want to change to ^ff0000Shura^000000?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4070;
+				close;
+			case 2:
+				mes "Ok. Please come back if you are ready to change.";
+				close;
+		}
+	}
+	if (Class == 18 && JobLevel == 50){
+		mes "Do you want to change to ^ff0000Genetic^000000?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4071;
+				close;
+			case 2:
+				mes "Ok. Please come back if you are ready to change.";
+				close;
+		}
+	}
+
+
+	if (Class == 4013 && JobLevel == 70){
+		mes "Do you want to change to ^ff0000Guillotine Cross High^000000?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4065;
+				close;
+			case 2:
+				mes "Ok. Please come back if you are ready to change.";
+				close;
+		}
+	}
+	if (Class == 4008 && JobLevel == 70){
+		mes "Do you want to change to ^ff0000Rune Knight High^000000?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4060;
+				close;
+			case 2:
+				mes "Ok. Please come back if you are ready to change.";
+				close;
+		}
+	}
+	if (Class == 4010 && JobLevel == 70){
+		mes "Do you want to change to ^ff0000Warlock High^000000?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4061;
+				close;
+			case 2:
+				mes "Ok. Please come back if you are ready to change.";
+				close;
+		}
+	}
+	if (Class == 4012 && JobLevel == 70){
+		mes "Do you want to change to ^ff0000Ranger High^000000?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4062;
+				close;
+			case 2:
+				mes "Ok. Please come back if you are ready to change.";
+				close;
+		}
+	}
+	if (Class == 4009 && JobLevel == 70){
+		mes "Do you want to change to ^ff0000Arch Bishop High^000000?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4063;
+				close;
+			case 2:
+				mes "Ok. Please come back if you are ready to change.";
+				close;
+		}
+	}
+	if (Class == 4011 && JobLevel == 70){
+		mes "Do you want to change to ^ff0000Mechanic High^000000?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4064;
+				close;
+			case 2:
+				mes "Ok. Please come back if you are ready to change.";
+				close;
+		}
+	}
+
+
+
+	if (Class == 4018 && JobLevel == 70){
+		mes "Do you want to change to ^ff0000Shadow Chaser High^000000?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4079;
+				close;
+			case 2:
+				mes "Ok. Please come back if you are ready to change.";
+				close;
+
+		}
+	}
+	if (Class == 4015 && JobLevel == 70){
+		mes "Do you want to change to ^ff0000Royal Guard High^000000?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4073;
+				close;
+			case 2:
+				mes "Ok. Please come back if you are ready to change.";
+				close;
+		}
+	}
+	if (Class == 4017 && JobLevel == 70){
+		mes "Do you want to change to ^ff0000Sorcerer High^000000?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4074;
+				close;
+			case 2:
+				mes "Ok. Please come back if you are ready to change.";
+				close;
+		}
+	}
+	if (Class == 4020 && JobLevel == 70){
+		mes "Do you want to change to ^ff0000Minstrel High^000000?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4075;
+				close;
+			case 2:
+				mes "Ok. Please come back if you are ready to change.";
+				close;
+		}
+	}
+	if (Class == 4021 && JobLevel == 70){
+		mes "Do you want to change to ^ff0000Wanderer High^000000?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4076;
+				close;
+			case 2:
+				mes "Ok. Please come back if you are ready to change.";
+				close;
+		}
+	}
+	if (Class == 4016 && JobLevel == 70){
+		mes "Do you want to change to ^ff0000Shura High^000000?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4077;
+				close;
+			case 2:
+				mes "Ok. Please come back if you are ready to change.";
+				close;
+		}
+	}
+	if (Class == 4019 && JobLevel == 70){
+		mes "Do you want to change to ^ff0000Genetic High^000000?";
+		switch(select("Yes","No")){
+			case 1:
+				mes "Ok, then let's do it!";
+				jobchange 4078;
+				close;
+			case 2:
+				mes "Ok. Please come back if you are ready to change.";
+				close;
+		}
+	}
+
+	mes "I'm sorry, but i can't do anything for you!";
+	close;
+}

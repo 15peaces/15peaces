@@ -1,0 +1,115 @@
+// -- Day - Night - Script --
+// --------------------------
+
+-	script	DayNight	-1,{
+
+OnHour00:
+Announce "It's now 0 o'clock on nyanRO.",bc_all|bc_blue;
+end;
+
+OnHour01:
+Announce "It's now 1 o'clock on nyanRO.",bc_all|bc_blue;
+end;
+
+OnHour03:
+Announce "It's now 3 o'clock on nyanRO.",bc_all|bc_blue;
+end;
+
+OnHour04:
+Announce "It's now 4 o'clock on nyanRO.",bc_all|bc_blue;
+end;
+
+OnHour05:
+Announce "It's now 5 o'clock on nyanRO.",bc_all|bc_blue;
+end;
+
+OnHour06:
+Announce "It's now 6 o'clock on nyanRO.",bc_all|bc_blue;
+end;
+
+OnHour07:
+day;
+Announce "It's now 7 o'clock on nyanRO.",bc_all|bc_blue;
+end;
+
+OnHour08:
+Announce "It's now 8 o'clock on nyanRO.",bc_all|bc_blue;
+end;
+
+OnHour09:
+Announce "It's now 9 o'clock on nyanRO.",bc_all|bc_blue;
+end;
+
+OnHour10:
+Announce "It's now 10 o'clock on nyanRO.",bc_all|bc_blue;
+end;
+
+OnHour11:
+Announce "It's now 11 o'clock on nyanRO.",bc_all|bc_blue;
+end;
+
+OnHour12:
+Announce "It's now 12 o'clock on nyanRO.",bc_all|bc_blue;
+end;
+
+OnHour13:
+Announce "It's now 13 o'clock on nyanRO.",bc_all|bc_blue;
+end;
+
+OnHour14:
+Announce "It's now 14 o'clock on nyanRO.",bc_all|bc_blue;
+end;
+
+OnHour15:
+Announce "It's now 15 o'clock on nyanRO.",bc_all|bc_blue;
+end;
+
+OnHour16:
+Announce "It's now 16 o'clock on nyanRO.",bc_all|bc_blue;
+end;
+
+OnHour17:
+Announce "It's now 17 o'clock on nyanRO.",bc_all|bc_blue;
+end;
+
+OnHour18:
+Announce "It's now 18 o'clock on nyanRO.",bc_all|bc_blue;
+end;
+
+OnHour19:
+night;
+Announce "It's now 19 o'clock on nyanRO.",bc_all|bc_blue;
+end;
+
+OnHour20:
+Announce "It's now 20 o'clock on nyanRO.",bc_all|bc_blue;
+end;
+
+OnHour21:
+Announce "It's now 21 o'clock on nyanRO.",bc_all|bc_blue;
+end;
+
+OnHour22:
+Announce "It's now 22 o'clock on nyanRO.",bc_all|bc_blue;
+end;
+
+OnHour23:
+Announce "It's now 23 o'clock on nyanRO.",bc_all|bc_blue;
+end;
+
+
+OnInit:
+if(gettime(3)>=7 && gettime(3)<19) day;
+else night;
+end;
+}
+
+-	script	MaxOnline	-1,{
+OnPCLoginEvent:
+    set .@OnlineCount, getusers(1);
+    if (.@OnlineCount > $MaxOnline) {
+        announce "New Record! There are " + .@OnlineCount + " people online.", bc_all;
+        set $MaxOnline, .@OnlineCount;
+    }
+    end;
+}

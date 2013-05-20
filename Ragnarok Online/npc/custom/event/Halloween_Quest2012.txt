@@ -1,0 +1,69 @@
+// ============== Information ==========================================
+// = Halloween Daily Event NyanRO : Braslis Halloween
+// = Made by :
+// = GM Sakura
+//===== Current Version: =============================================== 
+//= 1.11 [15peaces]
+//===== Compatible With: =============================================== 
+//= any 3ceam SVN <----ja ich hab ne Vorlage genutzt
+//===== Description: =================================================== 
+//= Daily Quest for Halloween Event
+//= Has a counter of 24 Hours until the Players can do the Quest agian.
+//===== Changes: =======================================================
+//= 1.11: Fixed some bugs [15peaces] 
+//====================================================================== 
+brasilis,211,174,3	script	Lost Soul	950,{
+	set .@npcname$,"^0000FF[ Lost Soul ]^000000";
+	if(gettimetick(2) - carfingor < (60 * 60 * 24)) {
+		mes .@npcname$;
+		mes "I'm sorry but you have to wait";
+		mes "24 Hours until you can do the Quest again!";
+		close;
+	}
+ 	
+	if(gettimetick(2) - carfingor > (60 * 60 * 24)) {
+		mes .@npcname$;
+		mes "I'm so sad";
+		mes "It is Halloween time and nobody is afraid of me";
+		mes "Pleace, can you help me";
+		next;
+		switch(select("Yes,what do I do:No,I hate Halloween:Got your Items!:Cancel")) {
+			case 1:
+				mes .@npcname$;
+				mes "Great, please bring me some stuff";
+				mes "I need ^FF0000 100 Black Cat Doll's ^000000";
+				mes "I need ^FF0000 50 Red Muffler ^000000";
+				mes "I need ^FF0000 50 Piece of Black Cloth ^000000";
+				mes "Bring me the stuff and you get something.";
+				next;
+				mes .@npcname$;
+				mes "You should find everything I need in Niffelheim";
+				mes "Please hurry up.";
+				close;
+			case 2:
+				mes .@npcname$;
+				mes "Oh...okay...than...Happy Haloween!";
+				close;
+			case 3:
+				if(countitem(7206)>= 100 && countitem(7216) >= 50 && countitem(7205)>= 50) {
+					mes .@npcname$;
+					mes "Year, that's great. Fantastic that must be work.!";
+					mes "Thank you, that is for you.You can help me again text time.";
+					delitem 7206,100;
+					delitem 7216, 50;
+					delitem 7205, 50;
+					getitem 14596,1;
+					set carfingor,gettimetick(2);
+					close;
+				}else{
+					mes .@npcname$;
+					mes "That's not enough!";
+					mes "Bring me more!";
+					close;
+				}
+			case 4:
+				close;				
+		}
+	}
+}
+//==========ENDE===============

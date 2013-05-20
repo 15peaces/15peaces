@@ -1,0 +1,273 @@
+// --- DB & BB Arena ---
+// =====================
+// --- by 15peaces ---
+// ===================
+
+function	script	int__	{
+	set .@num, atoi(getarg(0));
+	if ( .@num == 0 || .@num >= 2147483647 ) return getarg(0);
+	set .@l, getstrlen(.@num);
+	for ( set .@i,0; .@i < .@l; set .@i, .@i + 1 ) {
+		set .@num$, .@num % pow(10,.@i+1) / pow(10,.@i) + .@num$;
+		if ( (.@i+1) % 3 == 0 && .@i+1 != .@l ) set .@num$, ","+ .@num$;
+	}
+	return .@num$;
+}
+
+brasilis,205,176,3	script	DB Arena Warper	808,{
+	mes "[DB & BB Arena Staff]";
+	mes "Welcome!";
+	mes "If you want to, i'll warp you into the DB & BB- Arena of nyanRO!";
+	mes "But be warned, there could be lots of monsters insite!";
+	next;
+	mes "[DB & BB Arena Staff]";
+	mes "Do you want to enter?";
+	mes "";
+	mes "Currently there are ^ff0000"+getmapusers("pvp_y_1-3")+"^000000 Players and ^ff0000"+getmapmobs("pvp_y_1-3")+"^000000 Monsters insite.";
+	switch(select("Let me enter:No, sorry...:Private Rooms")){
+		case 1:
+			pvpoff "pvp_y_1-3";
+			//if(getmapusers("pvp_y_1-3") >= 1){
+				//warp "pvp_y_1-3",0,0;
+				//break;
+			//}
+			//killmonsterall "pvp_y_1-3";
+			warp "pvp_y_1-3",0,0;
+			break;
+		case 2:
+			mes "Hmm... ok... Have a nice day!";
+			close;
+		case 3:
+			mes "[Private MVP Room]";
+			mes "Please select a private MVP room.";
+			if ( getvariableofnpc(.rentitemid, "MVP Summoner") && getvariableofnpc(.rentitemamount, "MVP Summoner") )
+				mes "The cost to rent a room for "+ getvariableofnpc(.timeout, "MVP Summoner") +" minutes is "+ getvariableofnpc(.rentitemamount, "MVP Summoner") +" "+ getitemname( getvariableofnpc(.rentitemid, "MVP Summoner") ) +".";
+			else if ( getvariableofnpc(.rentcost, "MVP Summoner") )
+				mes "The cost to rent a room for "+ getvariableofnpc(.timeout, "MVP Summoner") +" minutes is "+ callfunc("int__", getvariableofnpc(.rentcost, "MVP Summoner") ) +" zeny.";
+			else
+				mes "You can only use the room for only "+ getvariableofnpc(.timeout, "MVP Summoner") +" minutes.";
+			mes " ";
+			for ( set .@i, 1; .@i <= 8; set .@i, .@i +1 ) {
+				if ( getvariableofnpc(.remaintime[.@i],"MVP Summoner") ) {
+					switch ( .type[.@i] ) {
+						case 1: set .@color$, "^EE8800"; break;
+						case 2: set .@color$, "^70CC11"; break;
+						case 3: set .@color$, "^0000FF"; break;
+						default: set .@color$, "^000000";
+					}
+					mes "Room #"+ .@i +" = "+ .@color$ + .whoinuse$[.@i] +"^000000";
+				}
+			}
+			next;
+			set .@room, select("MVP Room 1 ["+ getmapusers("06guild_01") +"]",
+				"MVP Room 2 ["+ getmapusers("06guild_02") +"]",
+				"MVP Room 3 ["+ getmapusers("06guild_03") +"]",
+				"MVP Room 4 ["+ getmapusers("06guild_04") +"]",
+				"MVP Room 5 ["+ getmapusers("06guild_05") +"]",
+				"MVP Room 6 ["+ getmapusers("06guild_06") +"]",
+				"MVP Room 7 ["+ getmapusers("06guild_07") +"]",
+				"MVP Room 8 ["+ getmapusers("06guild_08") +"]");
+			if ( getvariableofnpc(.remaintime[.@room],"MVP Summoner") ) {
+				if ( .inuseid[.@room] == getcharid(.type[.@room]) ) {
+					if ( getvariableofnpc(.killmonster,"MVP Summoner") && getmapusers("06guild_0"+ .@room) == 0 )
+						killmonsterall "06guild_0"+ .@room;
+					warp "06guild_0"+ .@room, 0,0;
+					end;
+				} else {
+					mes "[Private MVP Room]";
+					switch ( .type[.@room] ) {
+						case 1: set .@color$, "^EE8800Party "; break;
+						case 2: set .@color$, "^70CC11Guild "; break;
+						case 3: set .@color$, "^0000FFPlayer ";
+					}
+					mes "This room is reserved for ";
+					mes .@color$ + .whoinuse$[.@room] +"^000000 .";
+					if ( getgmlevel() < getvariableofnpc(.gmlvlkick,"MVP Summoner") ) {
+						mes "Please select another.";
+						close;
+					}
+					mes " ";
+					mes "Currently there are "+ getmapusers("06guild_0"+ .@room) +" players";
+					mes "in that room.";
+					set .@remaintime, getvariableofnpc(.remaintime[.@room],"MVP Summoner");
+					mes "It still has "+( .@remaintime /60 )+"mn "+( .@remaintime %60 )+"s left.";
+					set .@nobodycounter, getvariableofnpc(.nobodycounter[.@room],"MVP Summoner");
+					if ( .@nobodycounter )
+						mes "And have left empty for "+( .@nobodycounter /60 )+"mn "+( .@nobodycounter %60 )+"s.";
+					mes "Kick them ?";
+					next;
+					if ( select ( "No:Yes" ) == 1 ) close;
+					set getvariableofnpc(.remaintime[.@room],"MVP Summoner"), -1;
+					mes "[Private MVP Room]";
+					mes "Room#"+ .@room +" is empty now.";
+					close;
+				}
+			}
+			mes "[Private MVP Room]";
+			if ( getvariableofnpc(.rentitemid, "MVP Summoner") && getvariableofnpc(.rentitemamount, "MVP Summoner") ) {
+				if ( countitem(getvariableofnpc(.rentitemid, "MVP Summoner")) < getvariableofnpc(.rentitemamount, "MVP Summoner") ) {
+					mes "You don't have enough "+ getitemname( getvariableofnpc(.rentitemid, "MVP Summoner") ) +" to rent a room.";
+					close;
+				}
+			}
+			else if ( getvariableofnpc(.rentcost, "MVP Summoner") ) {
+				if ( zeny < getvariableofnpc(.rentcost, "MVP Summoner") ) {
+					mes "You don't have enough zeny to rent a room.";
+					close;
+				}
+			}
+			mes "You reserve this room for ...";
+			next;
+			set .@type, select("For my party members", "For my guild members", "For personal account use" );
+			if ( getcharid(.@type) == 0 ) {
+				mes "[Private MVP Room]";
+				mes "You do not own a "+( (.@type == 1)?"Party":"Guild" )+".";
+				close;
+			}
+			else if ( getvariableofnpc(.rentitemid, "MVP Summoner") && getvariableofnpc(.rentitemamount, "MVP Summoner") ) {
+				if ( countitem(getvariableofnpc(.rentitemid, "MVP Summoner")) < getvariableofnpc(.rentitemamount, "MVP Summoner") ) {
+					mes "You don't have enough "+ getitemname( getvariableofnpc(.rentitemid, "MVP Summoner") ) +" to rent a room.";
+					close;
+				}
+			}
+			else if ( getvariableofnpc(.remaintime[.@room],"MVP Summoner") ) {
+				mes "[Private MVP Room]";
+				mes "I'm sorry, somebody else has already register this room faster than you.";
+				close;
+			}
+			for ( set .@i, 1; .@i <= 8; set .@i, .@i +1 ) {
+				if ( getvariableofnpc(.remaintime[.@i],"MVP Summoner") && .@type == .type[.@i] && getcharid(.@type) == .inuseid[.@i] ) {
+					mes "[Private MVP Room]";
+					mes "You already rented Room#"+ .@i +". Use that room instead.";
+					close;
+				}
+			}
+			set .type[.@room], .@type;
+			set .inuseid[.@room], getcharid(.@type);
+			set .whoinuse$[.@room], strcharinfo( (.@type == 3)?0:.@type );
+			if ( getvariableofnpc(.rentitemid, "MVP Summoner") && getvariableofnpc(.rentitemamount, "MVP Summoner") ) {
+				if ( countitem(getvariableofnpc(.rentitemid, "MVP Summoner")) < getvariableofnpc(.rentitemamount, "MVP Summoner") ) end;
+				delitem getvariableofnpc(.rentitemid, "MVP Summoner"), getvariableofnpc(.rentitemamount, "MVP Summoner");
+			}
+			else if ( getvariableofnpc(.rentcost, "MVP Summoner") ) {
+				if ( zeny < getvariableofnpc(.rentcost, "MVP Summoner") ) end;
+				set zeny, zeny - getvariableofnpc(.rentcost, "MVP Summoner");
+			}
+			warp "06guild_0"+ .@room, 0,0;
+			killmonsterall "06guild_0"+ .@room;
+			donpcevent "MVP Summoner#"+ .@room +"::OnEnterMap";
+			end;
+		}
+}
+
+-	script	MVP Summoner	-1,{
+	goto L_Start;
+	
+	OnInit:
+		getmapxy .@map$, .@x, .@y, 1;
+		if ( .@map$ == "" ) {
+			set .timeout, 60;
+			set .nobodygiveup, 5;
+			set .rentcost, 1000000;
+			set .floodcontrol, 0;
+		}
+
+	L_Start: // I hate gotos ... but ...
+		set .@dif, strnpcinfo(2);
+		if ( .remind[.@dif] == 0 ) {
+			set .remind[.@dif], 1;
+			initnpctimer;
+		}
+
+	OnEnterMap:
+		set .@dif, strnpcinfo(2);
+		set .remind[.@dif], 0;
+		for ( set .@i, 1; .@i <= 9; set .@i, .@i +1 )
+			deletearray getd(".group"+ .@i +"limit"+ .@dif), getd(".group"+ .@i +"idsize");
+		set .nobodycounter[.@dif], 0;
+		getmapxy .@map$, .@x, .@y ,1;
+		set .starttime[.@dif], gettimetick(2);
+		do {
+			set .remaintime[.@dif], .timeout * 60 + .starttime[.@dif] - gettimetick(2);
+			set .@hour[.@dif], .remainTime[.@dif] / 3600 ;
+			set .@min[.@dif], .remainTime[.@dif] % 3600 / 60 ;
+			set .@sec[.@dif], .remainTime[.@dif] % 3600 % 60 ;
+			delwaitingroom strnpcinfo(0);
+			waitingroom "Time Left = "+( ( .@hour[.@dif] )?( .@hour[.@dif] +":"):"" )+( ( .@min[.@dif] < 10 )?"0"+ .@min[.@dif]: .@min[.@dif] )+":"+( ( .@sec[.@dif] < 10 )?"0"+ .@sec[.@dif]: .@sec[.@dif] ), 0;
+			if ( getmapusers(.@map$) )
+				set .nobodycounter[.@dif], 0;
+			else {
+				set .nobodycounter[.@dif], .nobodycounter[.@dif] +1 ;
+				if ( .nobodycounter[.@dif] > .nobodygiveup * 60 ) break;
+			}
+			sleep 995;
+		} while ( .remaintime[.@dif] > 1 );
+		set .remaintime[.@dif], 0;
+		delwaitingroom "MVP Summoner#"+ .@dif;
+		mapwarp .@map$, .respawnmap$, .respawnx, .respawny;
+		end;
+
+	OnTimer100:
+		stopnpctimer;
+		npctalk "Hi ~ the bubble above my head is the countdown for using this room.";
+		sleep 2000;
+		npctalk "Sometimes, I can skip for about 1 second in the countdown.";
+		sleep 3000;
+		npctalk "That is because the server is experiencing minor lag problem.";
+		sleep 3000;
+		npctalk "So, don't complain about me cheated for the countdown ~ ^.^";
+		sleep 3000;
+		npctalk "Have a nice day ~";
+		end;
+	}
+	
+06guild_01,49,49,4	duplicate(MVP Summoner)	MVP Summoner#1	116
+06guild_02,49,49,4	duplicate(MVP Summoner)	MVP Summoner#2	116
+06guild_03,49,49,4	duplicate(MVP Summoner)	MVP Summoner#3	116
+06guild_04,49,49,4	duplicate(MVP Summoner)	MVP Summoner#4	116
+06guild_05,49,49,4	duplicate(MVP Summoner)	MVP Summoner#5	116
+06guild_06,49,49,4	duplicate(MVP Summoner)	MVP Summoner#6	116
+06guild_07,49,49,4	duplicate(MVP Summoner)	MVP Summoner#7	116
+06guild_08,49,49,4	duplicate(MVP Summoner)	MVP Summoner#8	116
+
+
+06guild_01	mapflag	nowarpto
+06guild_02	mapflag	nowarpto
+06guild_03	mapflag	nowarpto
+06guild_04	mapflag	nowarpto
+06guild_05	mapflag	nowarpto
+06guild_06	mapflag	nowarpto
+06guild_07	mapflag	nowarpto
+06guild_08	mapflag	nowarpto
+06guild_01	mapflag	nomemo
+06guild_02	mapflag	nomemo
+06guild_03	mapflag	nomemo
+06guild_04	mapflag	nomemo
+06guild_05	mapflag	nomemo
+06guild_06	mapflag	nomemo
+06guild_07	mapflag	nomemo
+06guild_08	mapflag	nomemo
+06guild_01	mapflag	noteleport
+06guild_02	mapflag	noteleport
+06guild_03	mapflag	noteleport
+06guild_04	mapflag	noteleport
+06guild_05	mapflag	noteleport
+06guild_06	mapflag	noteleport
+06guild_07	mapflag	noteleport
+06guild_08	mapflag	noteleport
+06guild_01	mapflag	nosave	SavePoint
+06guild_02	mapflag	nosave	SavePoint
+06guild_03	mapflag	nosave	SavePoint
+06guild_04	mapflag	nosave	SavePoint
+06guild_05	mapflag	nosave	SavePoint
+06guild_06	mapflag	nosave	SavePoint
+06guild_07	mapflag	nosave	SavePoint
+06guild_08	mapflag	nosave	SavePoint
+06guild_01	mapflag	nopenalty
+06guild_02	mapflag	nopenalty
+06guild_03	mapflag	nopenalty
+06guild_04	mapflag	nopenalty
+06guild_05	mapflag	nopenalty
+06guild_06	mapflag	nopenalty
+06guild_07	mapflag	nopenalty
+06guild_08	mapflag	nopenalty

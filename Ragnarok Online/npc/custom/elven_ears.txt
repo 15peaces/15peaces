@@ -1,0 +1,86 @@
+// 15peaces RO Scripts (edited by atomius)
+// =======================================================================
+// NPC: Mimiru
+// =======================================================================
+// Version: 1.00
+// =======================================================================
+// Description:
+// This is a small quest for Elven Ears [1] (ID# 18507)
+// The player will need these items:
+// 	1x Elven Ears    (ID# 2286)
+//	1x Angel Wing    (ID# 2254)
+//	1x Evil Wing     (ID# 2255)
+//	1x Stone of Sage (ID# 12040) (7224 ?)
+//	50 Old Blue Box  (ID# 603)
+//	1000 Elven Arrow (ID# 1773)
+//	150 Soft Silk    (ID# 7166)
+//	10mio. Zeny
+// =======================================================================
+
+brasilis,179,189,3	script	Mimiru	438,{
+	mes "[Mimiru]";
+	mes "";
+	mes "*twitch*";
+	mes "Don't scare me like that!";
+	mes "I didn't notice you with your strange ears.";
+	mes "Watch out, I'll make ^0000ffElven Ears [1]^000000 for you...";
+	mes "";
+	mes "Hocus...fidialus...simsalus .... oh...";
+	mes "";
+	mes "I don't have the things I need.";
+	mes "Can you bring them to me?";
+	next;
+	mes "[Mimiru]";
+	mes "I need:";
+	mes "1 ^3355FFElven Ears^000000";
+	mes "1 ^3355FFAngel Wing^000000";
+	mes "1 ^3355FFEvil Wing^000000";
+	mes "1 ^3355FFStone of Sage^000000";
+	mes "50 ^3355FFOld Blue Boxes^000000";
+	mes "1000 ^3355FFElven Arrows^000000";
+	mes "150 ^3355FFSoft Silk^000000";
+	mes "10mio. ^3355FFZeny^000000";
+	next;
+	mes "[Mimiru]";
+	mes "I need the money, because I have to buy food somehow.";
+	mes "I'm so poor even though I have such beautiful wings...";
+	next;
+	menu "Got them!",-,"Go away o.O",L_OUT;
+	if(countitem(2286) < 1 || countitem(2254) < 1 || countitem(2255) < 1 || countitem(12040) < 1 || countitem(603) < 50 || countitem(1773) < 1000 || countitem(7166) < 150 || zeny < 10000000) goto L_NOTENOUGH;
+
+	mes "[Mimiru]";
+	mes "Do you have everything?";
+	mes "Wonderful, then I'll try again:";
+	mes "";
+	mes "Hocus...fidialus...simsalus .... primas!";
+	mes "";
+	mes "...";
+	mes "";
+	mes "And...";
+
+	delitem 2286,1;
+	delitem 2254,1;
+	delitem 2255,1;
+	delitem 12040,1;
+	delitem 603,50;
+	delitem 1773,1000;
+	delitem 7166,150;
+	set zeny,zeny - 10000000;
+
+	getitem 18507,1;
+
+	mes "The ^0000ffElven Ears [1]^000000 are done!";
+	mes "Now you look normal, just like me.";
+	close;
+L_NOTENOUGH:
+	mes "[Mimiru]";
+	mes "Well? Do you have everything?";
+	mes "No? Please hurry, I really want to give them to you.";
+	close;
+L_OUT:
+	mes "[Mimiru]";
+	mes "Well... then not.";
+	mes "But you look totally strange like that, really!";
+	close;
+}
+

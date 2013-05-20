@@ -1,0 +1,39 @@
+//===== eAthena Script =======================================
+//= Christmas Event (2010)
+//===== By: ==================================================
+//= Blacky (1.01 by 15peaces)
+//===== Current Version: =====================================
+//= 1.01
+//===== Compatible With: =====================================
+//= With all eAthena versions
+//===== Additional Comments: =================================
+//= This is my personal Christmas Event (2010)
+//= 24 times a day, each hour, it will spawns two Santa Porings
+//= in diffrent towns.
+//= If a player kills one he will get a present.
+//= Have a nice christmas!
+//==== Changes: ==============================================
+//= 1.01: Added New World Maps (nyanRO)
+//============================================================
+-	script	xmas2010#nro	99,{ //You don't need to edit this, the npc is hidden
+
+	OnMinute12:
+		set .@rand,rand(getarraysize(.spawns$));
+
+		monster	.spawns$[.@rand],0,0,"Santa Poring",.xmasporingid,2,"xmas2010#rro::OnKilledX";
+		announce "The christmas magic appeared in one of our towns.", bc_all;
+		end;
+
+	OnKilledX:
+		announce "Have a nice christmas "+strcharinfo(0)+" and enjoy your stay.", bc_all;
+		getitem 5381,1; //Get Santa Poring Hat if killed the event mob
+		getitem 12132,1; //Get Santas Bag if killed the event mob
+		end;
+
+	OnInit:
+		setarray .spawns$[0], "prontera", "morocc", "geffen", "payon", "alberta", "aldebaran", "xmas", "comodo",
+			"yuno", "amatsu", "gonryun", "umbala", "niflheim", "louyang", "jawaii", "ayothaya",
+			"einbroch", "lighthalzen", "einbech", "hugel", "rachel", "veins", "moscovia","izlude","dicastes01",
+			"malangdo","manuk","splendide","dewata";
+		set .xmasporingid, 1062; //ID of the event mob (Santa Poring)
+}

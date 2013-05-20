@@ -1,0 +1,26 @@
+// ============== Information ==========================================
+// = Easter 2013 Spawns (NyanRO)
+// = Made by :
+// = 15peaces
+//===== Current Version: =============================================== 
+//= 1.00 [15peaces]
+//===== Compatible With: =============================================== 
+//= Athena / 3ceam
+//===== Description: =================================================== 
+//= Spawns for Event Lunatic
+//= To use script, replace Monster:
+//= 1591,A_LUNATIC,Easter Bunny,Easter Bunny,29,2334,0,0,0,1,221,245,10,20,1,15,22,5,40,15,10,12,0,2,60,0xA1,200,1456,456,336,0,0,0,0,0,0,0,0,502,2000,12025,166,12026,166,12019,166,12105,20,0,0,0,0,0,0,0,0,0,0
+//===== Changes: ======================================================= 
+//= 1.0: First Version [15peaces]
+//======================================================================
+
+pay_fild04,0,0,0,0	monster	Easter Bunny	1591,10,0,0,0
+gef_fild04,0,0,0,0	monster	Easter Bunny	1591,10,0,0,0
+mjolnir_12,0,0,0,0	monster	Easter Bunny	1591,10,0,0,0
+prt_fild08,0,0,0,0	monster	Easter Bunny	1591,10,0,0,0
+moc_fild11,0,0,0,0	monster	Easter Bunny	1591,10,0,0,0
+ve_fild02,0,0,0,0	monster	Easter Bunny	1591,10,0,0,0
+niflheim,0,0,0,0	monster	Easter Bunny	1591,10,0,0,0
+mora,0,0,0,0	monster	Easter Bunny	1591,10,0,0,0
+ayo_fild01,0,0,0,0	monster	Easter Bunny	1591,10,0,0,0
+lhz_fild01,0,0,0,0	monster	Easter Bunny	1591,10,0,0,0

@@ -1,0 +1,99 @@
+//===== eAthena Script =======================================
+//= Reset NPC for Athena by Script & DB Team
+//===== By: ================================================== 
+//= eAthena Team (1.11 and up by 15peaces)
+//===== Current Version: ===================================== 
+//= 1.13
+//===== Compatible With: ===================================== 
+//= Any eAthena Version
+//===== Description: ========================================= 
+//= Resets skills, stats, or both.
+//===== Additional Comments: ================================= 
+//= 1.0 First Version
+//= 1.1 Optimized for the greater good. [Kisuka]
+//= 1.11 Changed to VotePoints System (nyanRO) [15peaces]
+//= 1.12 Added FeelReset (nyanRO) [15peaces]
+//= 1.13 Added Dynamic Zeny Prices based on Base- / Joblevel[15peaces]
+//============================================================ 
+brasilis,166,194,3	script	Reset Girl	124,{
+	query_sql "SELECT `coins` FROM `vote` WHERE `ID` = " + getcharid(3), @lastPoints;
+	
+	set @p1, ((JobLevel * JobLevel) * 10);
+	set @p2, ((BaseLevel * BaseLevel) * 10);
+	set @p3, @p1 + @p2;
+	
+	mes "[Reset Girl]";
+	mes "I am a Reset Girl.";
+	mes "Reset Skills: 1 nyanPoint & ^ff0000" + @p1 + " Zeny^000000";
+	mes "Reset Stats: 1 nyanPoint & ^ff0000" + @p2 + " Zeny^000000";
+	mes "Reset Skills & Stats: 1 nyanPoint & ^ff0000" + @p3 + " Zeny^000000";
+	mes "Reset Star Gladiators Feeling: 12 nyanPoints";
+	mes "";
+	mes "You currently have ^ff0000" + @lastPoints + " nyanPoints^000000";
+	mes "Please select the service you want:";
+	next;
+	switch(select("^FF3355Reset Skills:Reset Stats:Reset Skills & Stats:Reset Feeling^000000:Quit")) {
+		case 1:
+			mes "[Reset Girl]";
+			if (@lastPoints < 1) {
+				mes "Sorry, you don't have enough nyanPoints.";
+				close;
+			}
+			if (zeny < @p1) {
+				mes "Sorry, you don't have enough Zeny.";
+				close;
+			}
+			mes "Alright, here we go now.. Remember, changes won't take effect until you log back on!";
+			set @lastPoints, @lastPoints - 1;
+			set zeny, zeny - @p1;
+			query_sql "UPDATE vote SET coins = " + @lastPoints + " WHERE ID = " + getcharid(3);
+			ResetSkill;
+			close;
+		case 2:
+			mes "[Reset Girl]";
+			if (@lastPoints < 1) {
+				mes "Sorry, you don't have enough nyanPoints.";
+				close;
+			}
+			if (zeny < @p2) {
+				mes "Sorry, you don't have enough Zeny.";
+				close;
+			}
+			mes "Alright, here we go now.. Remember, changes won't take effect until you log back on!";
+			set @lastPoints, @lastPoints - 1;
+			set zeny, zeny - @p2;
+			query_sql "UPDATE vote SET coins = " + @lastPoints + " WHERE ID = " + getcharid(3);
+			ResetStatus;
+			close;
+		case 3:
+			mes "[Reset Girl]";
+			if (@lastPoints < 1) {
+				mes "Sorry, you don't have enough nyanPoints.";
+				close;
+			}
+			if (zeny < @p3) {
+				mes "Sorry, you don't have enough Zeny.";
+				close;
+			}
+			mes "Alright, here we go now.. Remember, changes won't take effect until you log back on!";
+			set @lastPoints, @lastPoints - 1;
+			set zeny, zeny - @p3;
+			query_sql "UPDATE vote SET coins = " + @lastPoints + " WHERE ID = " + getcharid(3);
+			ResetSkill;
+			ResetStatus;
+			close;
+		case 4:
+			mes "[Reset Girl]";
+			if (@lastPoints < 12) {
+				mes "Sorry, you don't have enough nyanPoints.";
+				close;
+			}
+			mes "Alright, here we go now.. Remember, changes won't take effect until you log back on!";
+			set @lastPoints, @lastPoints - 12;
+			query_sql "UPDATE vote SET coins = " + @lastPoints + " WHERE ID = " + getcharid(3);
+			atcommand ".feelreset";
+			close;
+		case 5:
+			close;
+	}
+}

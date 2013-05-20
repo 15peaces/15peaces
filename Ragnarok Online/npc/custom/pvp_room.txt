@@ -1,0 +1,79 @@
+//==================
+//=PvP Arena Script=
+//==================
+//====for eAthena===
+//==================
+//=V.1.01===========
+//==================
+//=by 15peaces======
+//==================
+//==Changes:========
+//===[2011-08-03]1.01:
+//===-Disabled Backwarps snince there is no need with @go (to activate see below)
+//==================
+
+brasilis,185,176,5	script	PVP Arena	65,{
+	mes "[PvP Arena]";
+	mes "";
+	mes "Welcome to the nyanRO";
+	mes	"PvP- Arena, ^0000ff"+strcharinfo(0)+"^000000!";
+	mes "";
+	mes "Here you can fight, fight, fight! hrhr...";
+	next;
+	
+	mes "[PvP Arena]";
+	mes "";
+	mes "What can I do for you?";
+	mes "";
+	mes "PvP-Room: ^ff0000"+getmapusers("pvp_n_1-5")+"/4^000000 Players";
+	mes "PvP-Arena: ^ff0000"+getmapusers("pvp_n_1-3")+"/8^000000 Players";
+	mes "Ultimate PvP: ^ff0000"+getmapusers("pvp_n_1-1")+"^000000 Players";
+	switch(select("Warp to PvP-Room:Warp to PvP-Arena:Warp to Ultimate PvP (Nightmare):cancel")){
+		case 1:
+			if(getmapusers("pvp_n_1-5") >= 4){
+				mes "^ff0000I'm sorry, this room is FULL!";
+				close;
+			}
+			warp "pvp_n_1-5",0,0;
+			break;
+		case 2:
+			if(getmapusers("pvp_n_1-3") >= 8){
+				mes "^ff0000I'm sorry, this room is FULL!";
+				close;
+			}
+			warp "pvp_n_1-3",0,0;
+			break;
+		case 3:
+			warp "pvp_n_1-1",0,0;
+		case 4:
+			close;
+	}
+}
+//pvp_n_1-5,99,133,0	script	Warp	45,1,2,{
+//	warp "brasilis",195,182;
+//	end;
+//}
+//pvp_n_1-3,100,139,0	script	Warp	45,1,2,{
+//	warp "brasilis",195,182;
+//	end;
+//}
+//pvp_n_1-1,95,15,0	script	Warp	45,1,2,{
+//	warp "brasilis",195,182;
+//	end;
+//}
+//pvp_n_1-1,104,182,0	script	Warp	45,1,2,{
+//	warp "brasilis",195,182;
+//	end;
+//}
+pvp_n_1-3,98,94,0,0	monster	Dummy Alice	1521,1,0,0,0
+	
+-	script	event#pvpm	-1,{
+OnInit:
+
+OnPCKillEvent:
+	query_sql "UPDATE `char` SET `kills` = `kills`+1 WHERE `char_id` = "+ getcharid(0);
+	if (attachrid(killedrid))
+	query_sql "UPDATE `char` SET `deaths` = `deaths`+1 WHERE `char_id` = "+ getcharid(0);
+	end;
+
+}

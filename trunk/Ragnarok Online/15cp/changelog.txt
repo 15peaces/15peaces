@@ -1,0 +1,26 @@
+Changelog for 15CP:
+===================
+	V.0.01:
+	-------
+		-Added <head> part
+		-Added simple configuration file support
+		-Added configuration option for CP title
+	
+	V.0.02:
+	-------
+		-Added support for facebook-de plugin
+		-Added facebook-de plugin
+		-Added default stylesheet
+
+	V.0.03:
+	-------
+		-Added accountbar
+		-Added functions.php
+		-Added function LoggedIn() & related configuration items
+		
+	V.0.04:
+	-------
+		-Added ?site check
+		-Added GetStatus function & related configuration items
+		-Added OnlineCount function
+		-Added SiteExist function

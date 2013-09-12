@@ -1,7 +1,16 @@
-<?
+<?php
 	include "config.php";
 	include "functions.php";
 
+	if(isset($_GET['popup'])){
+		if($_GET['popup'] == 'login'){
+				$login_pop = true;
+		}
+		if($_GET['popup'] == 'loginh'){
+				$login_pop = false;
+		}
+	}
+	
 	$cur_site = "home";
 	
 	if(isset($_GET['site'])){
@@ -20,10 +29,10 @@
 		<link rel="shortcut icon" href="images/favicon.ico"/>
 		<link href="styles/default/style.css" rel="stylesheet" type="text/css"/>
 
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	</head>
 	<body>
-		<?
+		<?php
 			if($config['plugin.facebook.activate'] == true){
 				include "plugins/facebook-de/body_top.htm";
 			}
@@ -31,7 +40,7 @@
 		<div id="head">
 			<div id="account">
 			<?php
-					if($_GET['popup'] <> "login"){
+					if(!$login_pop){
 						if(LoggedIn($_COOKIE['ID'],$_COOKIE['pass']) == false){
 							echo '&nbsp;&nbsp;&nbsp;Welcome Guest! (<a href=?popup=login&site='.$cur_site.'>Login</a> or <a href=?site=register>Register</a>)&nbsp;&nbsp;&nbsp;Serverstatus: '.GetStatus().' &nbsp;&nbsp;&nbsp;Players online: '.OnlineCount().'&nbsp;&nbsp;&nbsp;';
 						}else{
@@ -43,6 +52,9 @@
 					}
 			?>
 			</div>
+			<a href="index.php" id="logo"><?php echo $config['title'];?></a>
+			<ul id="navigation">
+			</ul>
 		</div>
 	</body>
 </html>

@@ -24,3 +24,13 @@ Changelog for 15CP:
 		-Added GetStatus function & related configuration items
 		-Added OnlineCount function
 		-Added SiteExist function
+	V.0.05:
+	-------
+		-Fixed Serverstatus speed-bug
+		-Updated needed googleapis to V. 1.10.2
+		-Some cleanup in popup handling
+	V.0.06:
+	-------
+		-Updated style.css
+		-Added logo to default style.
+		-Added navigation bar.

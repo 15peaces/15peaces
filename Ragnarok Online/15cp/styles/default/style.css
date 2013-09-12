@@ -7,12 +7,12 @@ html, body{height: 100%}
 
 body{background:#f0f0f0;color:#f0f0f0;}
 a {
-	color: #47104d;
+	color: #f0f0f0;
 	text-decoration:none; 
 	font-weight:bold;
 }
 a:hover {
-	color: #f000f0;
+	color: #b0b0b0;
 	text-decoration:none; 
 	font-weight:bold;
 }
@@ -41,7 +41,7 @@ h6 { font-size: 1em; margin: 0; }
 	top: 0;
 	right: 0;
 	padding: 10px;
-	background-color: #b096b3;
+	background-color: #313131;
 	border-radius: 5px 5px 5px 5px;
 	-moz-border-radius: 5px 5px 5px 5px;
 	-webkit-border-radius: 5px 5px 5px 5px;
@@ -54,10 +54,10 @@ h6 { font-size: 1em; margin: 0; }
 }
 #logo {
 	text-indent: -9999px;
-	width: 295px;
-	height: 130px;
+	width: 292px;
+	height: 150px;
 	display: block;
-	background: url('../images/logo.png') no-repeat;
+	background: url('images/logo.png') no-repeat;
 }
 ul#navigation {
 	width: 1000px;

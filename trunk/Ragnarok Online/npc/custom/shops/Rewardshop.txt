@@ -1,0 +1,122 @@
+// ============== Information ==========================================
+// = Reward Shop
+// = Made by :
+// = 15peaces
+//===== Current Version: ===============================================
+//= 1.00 [15peaces]
+//===== Compatible With: ===============================================
+//= Athena / 3ceam (SQL only)
+//===== Description: ===================================================
+//= This is a Reward Shop for Event- and Voteitems. 
+//===== Changes: =======================================================
+//= 1.0: First Version [15peaces]
+//======================================================================
+
+//SQL installation:
+//query_sql "CREATE TABLE `vote` (`account_name` varchar(23) DEFAULT NULL,`coins` int(10) unsigned DEFAULT NULL,`last_vote` varchar(15) DEFAULT '-',`ID` int(10) unsigned DEFAULT NULL,`vote1` int(1) unsigned DEFAULT '0',`vote2` int(1) unsigned DEFAULT '0',`vote3` int(1) unsigned DEFAULT '0',`donated` int(1) unsigned DEFAULT '0',KEY `name` (`account_name`)) ENGINE=InnoDB DEFAULT CHARSET=utf8";
+//query_sql "CREATE TABLE `eventpoints` (`ID` INT(10) UNSIGNED DEFAULT NULL,`account_name` VARCHAR(23) DEFAULT NULL,`coins` INT(10) NOT NULL DEFAULT '0') ENGINE=INNODB DEFAULT CHARSET=utf8";
+
+map,x,y,z	script	Reward Shop	430,{
+	query_sql "SELECT `coins` FROM `vote` WHERE `ID` = " + getcharid(3), @vPoints;
+	query_sql "SELECT `coins` FROM `eventpoints` WHERE `ID` = " + getcharid(3), @ePoints;
+	
+	mes "[Reward Shop]";
+	mes "Welcome " + strcharinfo(0) + "!";
+	mes "";
+	mes "Here you can get your rewards for Voting and donating for nyanRO!";
+	mes "Now you can get Event rewards, too!";
+	mes "";
+	mes "You currently have ^ff0000" + @vPoints + " VotePoints^000000 and ^ff0000" + @ePoints + " EventPoints^000000.";
+	next;
+	menu "Purchase Voteitems",L_VOTE,"Purchase Eventitems",L_EVENT,"Cancel",L_END;
+	
+	L_VOTE:
+		mes "[Reward Shop]";
+		mes "You currently have ^ff0000" + @vPoints + " nyanPoints^000000";	
+		next;
+		menu "Get Equip",L_VEQ,"Get other Items",L_VITEM,"Cancel",L_END;
+	L_VEQ:
+		mes "[Reward Shop]";
+		mes "Cost: ^ff0000100 - 150 VotePoints^000000";
+		mes "Select item:";
+		set @coast,100;
+		set @anz,1;
+		switch(select(getitemname(5132),"cancel")){
+			case 1:  set @get,5132; break;
+			default:
+				goto L_END;
+		}
+		goto L_GET_VREWARD;
+	L_VITEM:
+		mes "[Reward Shop]";
+		mes "Cost:";
+		mes getitemname(604)+" (10): ^ff00006 VotePoints^000000";
+		mes "";
+		mes "Select item:";
+		set @anz,1;
+		switch(select(getitemname(604),"cancel")){
+			case 1: set @coast,6;  set @get,604;set @anz,10;   break;
+			default:
+				goto L_END;
+		}
+		goto L_GET_VREWARD;
+	L_GET_VREWARD:
+		if(@vPoints < @coast){
+			goto L_vPoints;
+		}
+		set @vPoints, @vPoints - @coast;
+		query_sql "UPDATE vote SET coins = " + @vPoints + " WHERE ID = " + getcharid(3);
+		
+		getitem @get, @anz;
+		goto L_END;
+	L_EVENT:
+		mes "[Reward Shop]";
+		mes "You currently have ^ff0000" + @ePoints + " EventPoints^000000";	
+		next;
+		menu "Get Equip",L_EEQ,"Get other Items",L_EITEM,"Cancel",L_END;
+	L_EEQ:
+		mes "[Reward Shop]";
+		mes "Select item:";
+		set @anz,1;
+		switch(select(getitemname(5208)+"(^ff0000100p^000000)","cancel")){
+			case 1: set @coast,100; set @get,5208; break;
+			default:
+				goto L_END;
+		}
+		goto L_GET_EREWARD;
+	L_EITEM:
+		mes "[Reward Shop]";
+		mes "Select item:";
+		set @anz,1;
+		switch(select(getitemname(7620)+"(^ff000020p^000000)","cancel")){
+			case 1: set @coast,20; set @get,7620; break;
+			default:
+				goto L_END;
+		}
+		goto L_GET_EREWARD;
+	L_GET_EREWARD:
+		if(@ePoints < @coast){
+			goto L_ePoints;
+		}
+		set @ePoints, @ePoints - @coast;
+		query_sql "UPDATE eventpoints SET coins = " + @ePoints + " WHERE ID = " + getcharid(3);
+
+		getitem @get, @anz;
+		goto L_END;
+	L_END:
+		mes "[Reward Shop]";
+		mes "Have a nice day!";
+		close;
+	L_vPoints:
+		mes "[Reward Shop]";
+		mes "I'm sorry, you don't have enough VotePoints.";
+		mes "You got ^ff0000" + @vPoints + " VotePoints^000000";
+		mes "You must have ^ff0000" + @coast + " VotePoints^000000 or more to get Reward Items...";
+		close;
+	L_ePoints:
+		mes "[Reward Shop]";
+		mes "I'm sorry, you don't have enough EventPoints.";
+		mes "You got ^ff0000" + @ePoints + " EventPoints^000000";
+		mes "You must have ^ff0000" + @coast + " EventPoints^000000 or more to get Reward Items...";
+		close;
+}

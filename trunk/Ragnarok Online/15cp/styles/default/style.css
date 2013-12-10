@@ -28,8 +28,8 @@ a:hover {
 }
 h1, h2, h3, h4, h5, h6, ul, li, em, strong, pre, code { line-height: 1em; font-size: 100%; font-style: normal; color:#0f0f0f;}
 
-h1,h2,h3,h4,h5 { margin: 0 0 10px; }
-h1 { font-size: 2.41em; }
+h2,h3,h4,h5 { margin: 0 0 10px; }
+h1 { font-size: 2.41em; margin: 0 0 0; }
 h2 { font-size: 1.83em; }
 h3 { font-size: 1.41em; }
 h4 { font-size: 1.16em; }
@@ -57,7 +57,7 @@ h6 { font-size: 1em; margin: 0; }
 	width: 292px;
 	height: 150px;
 	display: block;
-	background: url('images/logo.png') no-repeat;
+	background: url('../../images/logo.png') no-repeat;
 }
 ul#navigation {
 	width: 1000px;
@@ -67,7 +67,7 @@ ul#navigation {
 	position: absolute;
 	bottom: 5px;
 	left: 0;
-	background-color: #b096b3;
+	background-color: #313131;
 		  border-width:5px;
 		  border-style:solid;
 		  border-color:#e0e0e0;
@@ -81,24 +81,24 @@ ul#navigation li {
 	margin-bottom:5px;
 }
 ul#navigation li a {
+	color: #f0f0f0;
 	padding: 5px 10px;
 }
 ul#navigation li a:hover {
-	color: #fff;
+	color: #b0b0b0;
 	text-decoration: none;
 }
 ul#navigation li.active a {
 
-	color: #a761af;
+	color: #77f;
 }
 #content {
 	width: 1000px;
 	height: 250px;
 	position: relative;
 	color: black;
-	margin-top: 30px;
 	margin: 0 auto;
-	background: url('../images/background.png') no-repeat;
+	background: url('../../images/bg.png') no-repeat;
 	border-radius: 5px 5px 5px 5px;
 	-moz-border-radius: 5px 5px 5px 5px;
 	-webkit-border-radius: 5px 5px 5px 5px;

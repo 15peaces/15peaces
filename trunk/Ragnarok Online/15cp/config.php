@@ -28,6 +28,9 @@
 	
 	// ------------------------------------------------------------------------------------------
 	// Plugins:
+
+	//Link configuration:
+	$config['plugin.homelink'] = ''; //Link to Servers Homepage or empty to disable
 	
 	// Facebook Plugin configuration:
 	$config['plugin.facebook.activate'] = true; //Activate Facebook-Plugin (*2)

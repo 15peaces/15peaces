@@ -34,3 +34,9 @@ Changelog for 15CP:
 		-Updated style.css
 		-Added logo to default style.
 		-Added navigation bar.
+	V.0.07:
+	-------
+		-Updated style.css
+		-Added CP Home link to navigation bar.
+		-Added Server Home link to navigation bar & configutation file.
+		-Added include for current page.

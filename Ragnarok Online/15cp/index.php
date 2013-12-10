@@ -54,7 +54,20 @@
 			</div>
 			<a href="index.php" id="logo"><?php echo $config['title'];?></a>
 			<ul id="navigation">
+				<?php
+					if($config['plugin.homelink'] <> '')
+						echo '<li><h1><a href="'.$config['plugin.homelink'].'">&nbsp;&nbsp;&nbsp;Server Home</a></h1></li>';
+					if($cur_site == "home")
+						echo '<li class="active"><h1><a href="?site=home">&nbsp;&nbsp;&nbsp;CP Home</a></h1></li>';
+					else
+						echo '<li><h1><a href="?site=home">&nbsp;&nbsp;&nbsp;CP Home</a></h1></li>';
+				?>
 			</ul>
+			<div class="clear"></div>
+		</div>
+		<div id="content">
+			<div id="header"></div>
+			<?php include 'sites/'.$cur_site.'.php';?>
 		</div>
 	</body>
 </html>

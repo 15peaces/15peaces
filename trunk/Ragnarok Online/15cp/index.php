@@ -11,6 +11,16 @@
 		}
 	}
 	
+	if(isset($_GET['action'])){
+		if($_GET['action'] == 'login'){
+			if(isset($_POST['ok'])){
+				echo login($_POST['name'],md5($_POST['pass']),$_POST['stay'],$_GET['page']);
+			}
+		}
+		if($_GET['action'] == 'logout')
+			logoff();
+	}
+	
 	$cur_site = "home";
 	
 	if(isset($_GET['site'])){
@@ -57,6 +67,10 @@
 				<?php
 					if($config['plugin.homelink'] <> '')
 						echo '<li><h1><a href="'.$config['plugin.homelink'].'">&nbsp;&nbsp;&nbsp;Server Home</a></h1></li>';
+					if($config['plugin.downloadlink'] <> '')
+						echo '<li><h1><a href="'.$config['plugin.downloadlink'].'">&nbsp;&nbsp;&nbsp;Download Page</a></h1></li>';
+					if($config['plugin.forumlink'] <> '')
+						echo '<li><h1><a href="'.$config['plugin.forumlink'].'">&nbsp;&nbsp;&nbsp;Forum</a></h1></li>';
 					if($cur_site == "home")
 						echo '<li class="active"><h1><a href="?site=home">&nbsp;&nbsp;&nbsp;CP Home</a></h1></li>';
 					else
@@ -67,6 +81,7 @@
 		</div>
 		<div id="content">
 			<div id="header"></div>
+			<div id="content_inner">
 			<?php include 'sites/'.$cur_site.'.php';?>
 		</div>
 	</body>

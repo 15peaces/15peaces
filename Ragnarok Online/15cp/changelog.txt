@@ -40,3 +40,9 @@ Changelog for 15CP:
 		-Added CP Home link to navigation bar.
 		-Added Server Home link to navigation bar & configutation file.
 		-Added include for current page.
+	V.0.08:
+	-------
+		-Updated style.css
+		-Added Download Page link to navigation bar & configutation file.
+		-Added Forum link to navigation bar & configutation file.
+		-Added related functions so Login / Logout are now working
